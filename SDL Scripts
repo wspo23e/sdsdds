@@ -1,0 +1,256 @@
+--[[ Info ]]--
+
+local ver = "1.00"
+local scriptname = "SDL animation"
+
+
+--[[ Keybinds ]]--
+
+local FrontflipKey = Enum.KeyCode.Z
+local BackflipKey = Enum.KeyCode.X
+local AirjumpKey = Enum.KeyCode.Space -- Change this line to set the AirjumpKey to the spacebar
+
+
+--[[ Dependencies ]]--
+
+local ca = game:GetService("ContextActionService")
+local zeezy = game:GetService("Players").LocalPlayer
+local h = 0.0174533
+
+
+--[[ Functions ]]--
+
+function zeezyFrontflip(act,inp,obj)
+    if inp == Enum.UserInputState.Begin then
+        zeezy.Character.Humanoid:ChangeState("Jumping")
+        wait()
+        zeezy.Character.Humanoid.Sit = true
+        for i = 1,360 do 
+            delay(i/720,function()
+                zeezy.Character.Humanoid.Sit = true
+                zeezy.Character.HumanoidRootPart.CFrame = zeezy.Character.HumanoidRootPart.CFrame * CFrame.Angles(-h,0,0)
+            end)
+        end
+        wait(0.55)
+        zeezy.Character.Humanoid.Sit = false
+    end
+end
+
+function zeezyBackflip(act,inp,obj)
+    if inp == Enum.UserInputState.Begin then
+        zeezy.Character.Humanoid:ChangeState("Jumping")
+        wait()
+        zeezy.Character.Humanoid.Sit = true
+        for i = 1,360 do
+            delay(i/720,function()
+                zeezy.Character.Humanoid.Sit = true
+                zeezy.Character.HumanoidRootPart.CFrame = zeezy.Character.HumanoidRootPart.CFrame * CFrame.Angles(h,0,0)
+            end)
+        end
+        wait(0.55)
+        zeezy.Character.Humanoid.Sit = false
+    end
+end
+
+function zeezyAirjump(act,inp,obj)
+    if inp == Enum.UserInputState.Begin then
+        zeezy.Character:FindFirstChildOfClass('Humanoid'):ChangeState("Seated")
+        wait()
+        zeezy.Character:FindFirstChildOfClass('Humanoid'):ChangeState("Jumping")    
+    end
+end
+
+
+--[[ Binds ]]--
+
+ca:BindAction("zeezyFrontflip",zeezyFrontflip,false,FrontflipKey)
+ca:BindAction("zeezyBackflip",zeezyBackflip,false,BackflipKey)
+ca:BindAction("zeezyAirjump",zeezyAirjump,false,AirjumpKey)
+
+--[[ Load Message ]]--
+
+print(scriptname .. " " .. ver .. " loaded successfully")
+print("Remade by SDL")
+
+-----------------------------------------------------------------------------------------------------------
+----------------FOV CHANGER, BLUR SCREEN, SOUND STARTING, (THIS IS NOT THE SPIDER WEB SHOOTER SCRIPT)
+print("Controlls: ")
+wait(0.1)
+print("SPIDER WEB SHOOT: L")
+wait(0.1)
+print("Frontflip = Z")
+wait(0.1)
+print("Backflip = X")
+wait(0.1)
+print("AirJump = Space")
+wait(0.01)
+
+local camera = game.Workspace.CurrentCamera
+
+local desiredFOV = 200  
+
+local function changeFOV()
+    camera.FieldOfView = desiredFOV
+end
+
+changeFOV()
+
+wait(0.2)
+
+local soundId = "rbxassetid://1842802203"
+
+-- Blur function
+local function applyBlur()
+    local blur = Instance.new("BlurEffect")
+    blur.Size = 25  -- Adjust the blur intensity
+    blur.Name = "CustomBlur"
+    blur.Parent = game.Lighting
+end
+
+-- Unblur function
+local function removeBlur()
+    local blur = game.Lighting:FindFirstChild("CustomBlur")
+    if blur then
+        blur:Destroy()
+    end
+end
+
+-- Function to animate text like a typewriter
+local function typewriterAnimation(textLabel, text, speed)
+    for i = 1, #text do
+        textLabel.Text = text:sub(1, i)
+        wait(speed)
+    end
+end
+
+-- Play sound, apply blur, and show typewriter animation
+local function executeEffect()
+    local player = game.Players.LocalPlayer
+
+    -- Create a ScreenGui
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "TypewriterGui"
+    gui.Parent = player.PlayerGui
+
+    -- Create a TextLabel
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Size = UDim2.new(0, 700, 0, 50)
+    textLabel.Position = UDim2.new(0.580, -100, 0.220, -25)  -- Adjusted position
+    textLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+    textLabel.BackgroundColor3 = Color3.new(0, 0, 0)
+    textLabel.TextColor3 = Color3.new(0, 0, 255)
+    textLabel.Font = Enum.Font.SourceSans
+    textLabel.TextSize = 30
+    textLabel.TextWrapped = true
+    textLabel.BackgroundTransparency = 1
+    textLabel.TextStrokeTransparency = 0.5
+    textLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+    textLabel.Text = ""  -- Initial empty text
+    textLabel.Parent = gui
+
+    local sound = Instance.new("Sound")
+    sound.SoundId = soundId
+    sound.Parent = player
+    sound:Play()
+
+    applyBlur()
+
+    -- Text to display and speed of the typewriter animation
+    local textToDisplay = "SpiderMan ReAnimation made by SDL, press F9 to check the controls"
+    local animationSpeed = 0.05  -- Adjust the speed
+
+    -- Trigger the typewriter animation
+    typewriterAnimation(textLabel, textToDisplay, animationSpeed)
+
+    wait(5)  -- Wait for 10 seconds
+
+    removeBlur()
+
+    -- Clean up the ScreenGui after the animation
+    gui:Destroy()
+end
+
+-- Execute the effect when the LocalScript is loaded
+executeEffect()
+
+wait(1)
+
+while true do
+    local c = game.Players:GetChildren()
+    for i = 1, #c do
+        if c[i].ClassName == "Player" then
+        c[i].CameraMode = "LockFirstPerson"
+            end
+        end
+    wait(0.01)
+    end
+
+---------------------------------------------------------------------------------------------------------------
+--SPIDER CURSOR
+local mouse = game.Players.LocalPlayer:GetMouse()
+mouse.Icon = "http://www.roblox.com/asset?id=15737619870"
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ --THIS IS THE SPIDER WEB SHOOTER
+
+local userInputService = game:GetService("UserInputService")
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+local mouse = player:GetMouse()
+
+local dragging = false
+local originalGravity = workspace.Gravity
+
+-- Function to start dragging towards mouse position
+local function startDrag()
+    if dragging then return end
+
+    dragging = true
+    workspace.Gravity = 0
+
+    local mouseTarget = mouse.Hit.Position
+    local direction = (mouseTarget - humanoidRootPart.Position).Unit
+    local speed = 80
+
+    local bodyVelocity = Instance.new("BodyVelocity")
+    bodyVelocity.Velocity = direction * speed
+    bodyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+    bodyVelocity.Parent = humanoidRootPart
+
+    userInputService.InputBegan:Connect(function(input)
+        if input.KeyCode == Enum.KeyCode.L then
+            -- Play audio when "L" is pressed
+            local audio = Instance.new("Sound")
+            audio.SoundId = "rbxassetid://9119460428"  -- Replace with your audio ID
+            audio.Parent = player
+            audio:Play()
+
+            stopDrag()
+        end
+    end)
+end
+
+-- Function to stop dragging
+local function stopDrag()
+    if not dragging then return end
+
+    dragging = false
+    workspace.Gravity = originalGravity
+
+    local bodyVelocity = humanoidRootPart:FindFirstChildOfClass("BodyVelocity")
+    if bodyVelocity then
+        bodyVelocity:Destroy()
+    end
+end
+
+-- Connect the startDrag function when the script is loaded
+userInputService.InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.L then
+        if dragging then
+            stopDrag()
+        else
+            startDrag()
+        end
+    end
+end)
