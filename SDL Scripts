@@ -257,20 +257,3 @@ end)
 
 
 
-
-    -- Create a TextLabel for GUI controlls
-    local textLabel = Instance.new("TextLabel")
-    textLabel.Size = UDim2.new(0, 700, 0, 50)
-    textLabel.Position = UDim2.new(0.02, 0, 0.384, 0)  -- Adjusted position
-    textLabel.AnchorPoint = Vector2.new(0.5, 0.5)
-    textLabel.BackgroundColor3 = Color3.new(0, 0, 0)
-    textLabel.TextColor3 = Color3.new(0, 0, 255)
-    textLabel.Font = Enum.Font.SourceSans
-    textLabel.TextSize = 30
-    textLabel.TextWrapped = true
-    textLabel.BackgroundTransparency = 1
-    textLabel.TextStrokeTransparency = 0.5
-    textLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
-    textLabel.Text = "FrontflipKey = Z"  -- Initial empty text
-    textLabel.Parent = gui
-
