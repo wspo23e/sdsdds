@@ -180,15 +180,15 @@ executeEffect()
 
 wait(1)
 
-while true do
-    local c = game.Players:GetChildren()
-    for i = 1, #c do
-        if c[i].ClassName == "Player" then
-        c[i].CameraMode = "LockFirstPerson"
-            end
-        end
-    wait(0.01)
-    end
+--while true do
+ --  local c = game.Players:GetChildren()
+  --  for i = 1, #c do
+     --   if c[i].ClassName == "Player" then
+      --  c[i].CameraMode = "LockFirstPerson"
+      --      end
+      --  end
+   -- wait(0.01)
+   -- end
 
 ---------------------------------------------------------------------------------------------------------------
 --SPIDER CURSOR
